@@ -10,6 +10,7 @@ const session = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	date: Date,
 })
 
 const Session = (module.exports = mongoose.model("Session", session))

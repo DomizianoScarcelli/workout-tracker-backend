@@ -6,9 +6,15 @@ var mongoose = require("mongoose")
  * Gets all the sessions in the DB
  */
 router.route("/").get((req, res) => {
-	Session.find()
-		.then((session) => res.json(session))
-		.catch((err) => res.status(400).json("Error: " + err))
+	if (req.query.id != null) {
+		Session.findById(req.query.id)
+			.then((session) => res.json(session))
+			.catch((err) => res.status(400).json("Error: " + err))
+	} else {
+		Session.find()
+			.then((session) => res.json(session))
+			.catch((err) => res.status(400).json("Error: " + err))
+	}
 })
 
 /**
@@ -18,7 +24,8 @@ router.route("/").get((req, res) => {
 router.route("/create").post((req, res) => {
 	const duration = req.body.duration
 	const user = req.body.user
-	const newSession = new Session({ duration, user })
+	const date = new Date()
+	const newSession = new Session({ duration, user, date })
 
 	newSession
 		.save()
@@ -48,16 +55,6 @@ router.route("/addexercise/:session").post((req, res) => {
 		.then(() => res.json("Exercises added"))
 		.catch((err) => res.status(400).json("Error: " + err))
 })
-
-// /**
-//  * Return details of a session by id
-//  */
-// router.route("/:id").get((req, res) => {
-// 	const id = req.params.id
-//     Session.findById(id)
-// 		.then((session) => res.json(session))
-// 		.catch((err) => res.status(400).json("Error: " + err))
-// })
 
 /**
  * Gets all the session of a certain user
