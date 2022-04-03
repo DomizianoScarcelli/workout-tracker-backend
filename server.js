@@ -5,7 +5,7 @@ const express = require("express")
 require("dotenv").config()
 
 const app = express()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 8080
 
 app.use(cors())
 app.use(express.json())
@@ -17,8 +17,8 @@ connection.once("open", () => {
 	console.log("MongoDB database connection established successfully")
 })
 
-const usersRouter = require("./routes/users")
-const sessionsRouter = require("./routes/sessions")
+const usersRouter = require("./routes/user.route")
+const sessionsRouter = require("./routes/session.route")
 
 app.use("/sessions", sessionsRouter)
 app.use("/users", usersRouter)
