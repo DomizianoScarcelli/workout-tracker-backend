@@ -20,10 +20,12 @@ const user = mongoose.Schema({
 				type: String,
 				required: true,
 			},
-			exercises: {
-				name: String,
-				repetition: Number,
-			},
+			exercises: [
+				{
+					name: String,
+					repetition: Number,
+				},
+			],
 			duration: {
 				type: Number,
 				required: true,
