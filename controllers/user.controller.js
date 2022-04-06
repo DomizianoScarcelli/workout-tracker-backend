@@ -26,3 +26,19 @@ exports.addUser = async (req, res) => {
 		res.status(400).json("Error: " + err.message)
 	}
 }
+
+exports.addSavedWorkout = async (req, res) => {
+	const username = req.params.username
+	const name = req.body.name
+	const exercises = req.body.exercises
+	const duration = req.body.duration
+	try {
+		const savedWorkout = await UserService.addSavedWorkout(username, name, exercises, duration)
+		res.json(`Added new workout to the user ${username} with the following info: 
+		name: ${name}
+		exercises: ${exercises}
+		duration: ${duration}`)
+	} catch (err) {
+		res.status(400).json("Error: " + err.message)
+	}
+}
