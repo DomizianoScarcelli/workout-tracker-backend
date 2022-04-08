@@ -23,7 +23,7 @@ const user = mongoose.Schema({
 			exercises: [
 				{
 					name: String,
-					repetition: Number,
+					repetition: [Number],
 				},
 			],
 			duration: {
