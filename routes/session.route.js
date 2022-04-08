@@ -28,15 +28,7 @@ router.route("/create").post(SessionController.createSession)
  */
 router.route("/addexercise/:session").post(SessionController.addExerciseToSession) //TODO: doesn't work
 
-/**
- * Gets all the user (specified inside the :username field) sessions of the current week
- */
-router.route("/:username/weekly-workouts").get(SessionController.getWeekSessions)
-
-/**
- * Gets all the user (specified inside the :username field) sessions of the current month
- */
-router.route("/:username/monthly-workouts").get(SessionController.getMonthSessions)
+router.route("/:username/workouts").get(SessionController.getUserSessionsByPeriod)
 
 /**
  * Return the total minutes of workout that the user has done in the selected day

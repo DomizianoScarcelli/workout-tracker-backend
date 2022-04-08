@@ -17,20 +17,12 @@ exports.getUserSessions = async (req, res) => {
 	res.json(sessions)
 }
 
-exports.getWeekSessions = async (req, res) => {
+exports.getUserSessionsByPeriod = async (req, res) => {
 	const username = req.params.username
+	const startDate = moment(req.query.startDate)
+	const endDate = moment(req.query.endDate)
 	try {
-		const sessions = await SessionService.findSessionsSortedByDate({ user: username, date: { $gt: moment().startOf("isoWeek"), $lt: moment().endOf("isoWeek") } })
-		res.json(sessions)
-	} catch (err) {
-		res.json("Error: " + err.message)
-	}
-}
-
-exports.getMonthSessions = async (req, res) => {
-	const username = req.params.username
-	try {
-		const sessions = await SessionService.findSessions({ user: username, date: { $gt: moment().startOf("month"), $lt: moment().endOf("month") } })
+		const sessions = await SessionService.getUserSessionsByPeriod(username, startDate, endDate)
 		res.json(sessions)
 	} catch (err) {
 		res.json("Error: " + err.message)

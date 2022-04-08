@@ -6,8 +6,8 @@ exports.findSessions = async (query) => {
 	return Session.find(query)
 }
 
-exports.findSessionsSortedByDate = async (query) => {
-	const sessions = await Session.find(query)
+exports.getUserSessionsByPeriod = async (username, startDate, endDate) => {
+	const sessions = await Session.find({ user: username, date: { $gte: startDate.toDate(), $lte: endDate.toDate() } })
 	sessions.sort()
 	return sessions
 }
