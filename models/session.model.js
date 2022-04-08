@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const session = mongoose.Schema({
-	exercises: [{ name: String, repetition: Number }],
+	exercises: [{ name: String, repetition: [Number] }],
 	duration: {
 		type: Number,
 		required: true,
