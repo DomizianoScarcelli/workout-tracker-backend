@@ -52,9 +52,9 @@ exports.getUserMostFrequentExercises = async (username, startTime, endTime) => {
 			if (workout.exercises == undefined) return
 			for (let exercise of workout.exercises) {
 				if (!getExerciseIndexIfExists(result, exercise.name)) {
-					result.push({ name: exercise.name, repetition: exercise.repetition })
+					result.push({ name: exercise.name, repetition: exercise.repetition.reduce((partialSum, a) => partialSum + a, 0) })
 				} else {
-					result[getExerciseIndexIfExists(result, exercise.name)].repetition += exercise.repetition //Questo coso da errore
+					result[getExerciseIndexIfExists(result, exercise.name)].repetition += exercise.repetition.reduce((partialSum, a) => partialSum + a, 0)
 				}
 			}
 		}
