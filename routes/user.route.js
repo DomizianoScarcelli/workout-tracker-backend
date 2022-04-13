@@ -10,4 +10,9 @@ router.route("/add").post(UserController.addUser)
 
 router.route("/:username/saved-workouts/add").post(UserController.addSavedWorkout)
 
+/**
+ * Removes a workout
+ */
+router.route("/delete/:workoutId").delete(UserController.removeSavedWorkout)
+
 module.exports = router

@@ -24,3 +24,9 @@ exports.addSavedWorkout = async (username, name, exercises, duration) => {
 		}
 	)
 }
+
+exports.removeSavedWorkout = async (username, workoutId) => {
+	//TODO: executing query twice error
+	const workout = await User.updateOne({ username: username }, { $pull: { savedWorkouts: { _id: workoutId } } })
+	return workout
+}

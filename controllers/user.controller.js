@@ -42,3 +42,14 @@ exports.addSavedWorkout = async (req, res) => {
 		res.status(400).json("Error: " + err.message)
 	}
 }
+
+exports.removeSavedWorkout = async (req, res) => {
+	const username = req.query.username
+	const workoutId = req.params.workoutId
+	try {
+		const workout = await UserService.removeSavedWorkout(username, workoutId)
+		res.json(workout)
+	} catch (err) {
+		res.json("Error: " + err.message)
+	}
+}
