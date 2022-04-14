@@ -53,4 +53,6 @@ router.route("/:username/workout-time-period").get(SessionController.getWorkoutT
  */
 router.route("/:username/most-frequent-exercises").get(SessionController.getUserMostFrequentExercises)
 
+router.route("/remove-history/:workoutId").delete(SessionController.removeWorkoutFromHistory)
+
 module.exports = router

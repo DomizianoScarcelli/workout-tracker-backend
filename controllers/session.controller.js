@@ -95,3 +95,14 @@ exports.getUserMostFrequentExercises = async (req, res) => {
 		res.json("Error: " + err.message)
 	}
 }
+
+exports.removeWorkoutFromHistory = async (req, res) => {
+	const username = req.query.username
+	const workoutId = req.params.workoutId
+	try {
+		const exercises = await SessionService.removeWorkoutFromHistory(username, workoutId)
+		res.json(exercises)
+	} catch (err) {
+		res.json("Error: " + err.message)
+	}
+}

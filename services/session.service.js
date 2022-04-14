@@ -68,3 +68,8 @@ exports.getUserMostFrequentExercises = async (username, startTime, endTime) => {
 		.reverse()
 	return result
 }
+
+exports.removeWorkoutFromHistory = async (username, workoutId) => {
+	const workout = await Session.deleteOne({ _id: workoutId, user: username })
+	return workout
+}
