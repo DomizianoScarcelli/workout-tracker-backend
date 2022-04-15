@@ -32,7 +32,7 @@ exports.getUserSessionsByPeriod = async (req, res) => {
 exports.createSession = async (req, res) => {
 	const duration = req.body.duration
 	const user = req.body.user
-	const date = new Date()
+	const date = req.body.date
 	let exercises = []
 	if (exercises != undefined) {
 		exercises = req.body.exercises
