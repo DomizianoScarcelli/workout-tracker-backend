@@ -46,14 +46,17 @@ exports.getWorkoutTime = async (username, startDate, endDate, period) => {
 			//TODO: query the database for the correct sessions
 			const weeksBetween = weeksBetweenInterval(startDate, endDate)
 			for (const week of weeksBetween) {
-				result.push({ date: week, duration: 100 })
+				const sessions = await Session.find({ user: username, date: { $gte: week[0].toDate(), $lte: week[1].toDate() } })
+				result.push({ date: week, duration: getOverallTime(sessions) })
 			}
 			break
 		case "year":
 			//TODO: query the database for the correct sessions
 			const monthsBetween = monthsBetweenInterval(startDate, endDate)
 			for (const month of monthsBetween) {
-				result.push({ date: month, duration: 100 })
+				const sessions = await Session.find({ user: username, date: { $gte: month[0].toDate(), $lte: month[1].toDate() } })
+
+				result.push({ date: month, duration: getOverallTime(sessions) })
 			}
 			break
 		default:
