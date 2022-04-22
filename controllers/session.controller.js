@@ -65,7 +65,7 @@ exports.getWorkoutTimeDay = async (req, res) => {
 	const username = req.params.username
 	const day = moment(req.query.day)
 	try {
-		const workoutTime = await SessionService.getWorkoutTime(username, day, day)
+		const workoutTime = await SessionService.getWorkoutTime(username, day, day, "isoWeek")
 		res.json(workoutTime)
 	} catch (err) {
 		res.json("Error: " + err.message)
@@ -76,8 +76,9 @@ exports.getWorkoutTimeInterval = async (req, res) => {
 	const username = req.params.username
 	const startTime = moment(req.query.startTime)
 	const endTime = moment(req.query.endTime)
+	const period = req.query.period
 	try {
-		const workoutTime = await SessionService.getWorkoutTime(username, startTime, endTime)
+		const workoutTime = await SessionService.getWorkoutTime(username, startTime, endTime, period)
 		res.json(workoutTime)
 	} catch (err) {
 		res.json("Error: " + err.message)

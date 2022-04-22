@@ -1,5 +1,5 @@
 const Session = require("../models/session.model")
-const daysBetweenInterval = require("../utils/DateTimeUtils")
+const { daysBetweenInterval, weeksBetweenInterval, monthsBetweenInterval } = require("../utils/DateTimeUtils")
 const { getOverallTime, getExerciseIndexIfExists } = require("../utils/SessionsUtils")
 
 exports.findSessions = async (query) => {
@@ -31,12 +31,33 @@ exports.addExerciseToSession = async (name, id, repetition) => {
 	)
 }
 
-exports.getWorkoutTime = async (username, startDate, endDate) => {
+exports.getWorkoutTime = async (username, startDate, endDate, period) => {
 	let result = []
-	const daysBetween = daysBetweenInterval(startDate, endDate)
-	for (const day of daysBetween) {
-		const sessions = await Session.find({ user: username, date: { $gte: day.startOf("day").toDate(), $lte: day.endOf("day").toDate() } })
-		result.push({ date: day, duration: getOverallTime(sessions) })
+
+	switch (period) {
+		case "isoWeek":
+			const daysBetween = daysBetweenInterval(startDate, endDate)
+			for (const day of daysBetween) {
+				const sessions = await Session.find({ user: username, date: { $gte: day.startOf("day").toDate(), $lte: day.endOf("day").toDate() } })
+				result.push({ date: day, duration: getOverallTime(sessions) })
+			}
+			break
+		case "month":
+			//TODO: query the database for the correct sessions
+			const weeksBetween = weeksBetweenInterval(startDate, endDate)
+			for (const week of weeksBetween) {
+				result.push({ date: week, duration: 100 })
+			}
+			break
+		case "year":
+			//TODO: query the database for the correct sessions
+			const monthsBetween = monthsBetweenInterval(startDate, endDate)
+			for (const month of monthsBetween) {
+				result.push({ date: month, duration: 100 })
+			}
+			break
+		default:
+			break
 	}
 	return result
 }
