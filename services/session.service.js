@@ -1,4 +1,5 @@
 const Session = require("../models/session.model")
+const moment = require("moment")
 const { daysBetweenInterval, weeksBetweenInterval, monthsBetweenInterval } = require("../utils/DateTimeUtils")
 const { getOverallTime, getExerciseIndexIfExists } = require("../utils/SessionsUtils")
 
@@ -8,7 +9,15 @@ exports.findSessions = async (query) => {
 
 exports.getUserSessionsByPeriod = async (username, startDate, endDate) => {
 	const sessions = await Session.find({ user: username, date: { $gte: startDate.toDate(), $lte: endDate.toDate() } })
-	sessions.sort()
+	sessions.sort((workout1, workout2) => {
+		if (moment(workout1.date) < moment(workout2.date)) {
+			return -1
+		}
+		if (moment(workout1.date) > moment(workout2.date)) {
+			return 1
+		}
+		return 0
+	})
 	return sessions
 }
 
