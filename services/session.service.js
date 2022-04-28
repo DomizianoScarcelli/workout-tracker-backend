@@ -7,7 +7,8 @@ exports.findSessions = async (query) => {
 	return Session.find(query)
 }
 
-exports.getUserSessionsByPeriod = async (username, startDate, endDate) => {
+exports.getUserSessionsByPeriod = async (username, startDate, endDate, page) => {
+	const ELEMENTS_PER_PAGE = 15
 	const sessions = await Session.find({ user: username, date: { $gte: startDate.toDate(), $lte: endDate.toDate() } })
 	sessions.sort((workout1, workout2) => {
 		if (moment(workout1.date) < moment(workout2.date)) {
@@ -18,7 +19,7 @@ exports.getUserSessionsByPeriod = async (username, startDate, endDate) => {
 		}
 		return 0
 	})
-	return sessions
+	return sessions.slice((page - 1) * ELEMENTS_PER_PAGE, page * ELEMENTS_PER_PAGE)
 }
 
 exports.createSession = async (date, exercises, duration, user) => {

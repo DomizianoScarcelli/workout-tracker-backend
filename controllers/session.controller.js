@@ -21,8 +21,9 @@ exports.getUserSessionsByPeriod = async (req, res) => {
 	const username = req.params.username
 	const startDate = moment(req.query.startDate)
 	const endDate = moment(req.query.endDate)
+	const page = req.query.page || 1
 	try {
-		const sessions = await SessionService.getUserSessionsByPeriod(username, startDate, endDate)
+		const sessions = await SessionService.getUserSessionsByPeriod(username, startDate, endDate, page)
 		res.json(sessions)
 	} catch (err) {
 		res.json("Error: " + err.message)
