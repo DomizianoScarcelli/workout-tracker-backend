@@ -12,10 +12,10 @@ exports.getUserSessionsByPeriod = async (username, startDate, endDate, page) => 
 	const sessions = await Session.find({ user: username, date: { $gte: startDate.toDate(), $lte: endDate.toDate() } })
 	sessions.sort((workout1, workout2) => {
 		if (moment(workout1.date) < moment(workout2.date)) {
-			return -1
+			return 1
 		}
 		if (moment(workout1.date) > moment(workout2.date)) {
-			return 1
+			return -1
 		}
 		return 0
 	})
